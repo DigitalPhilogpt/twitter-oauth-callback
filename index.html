@@ -3,10 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Twitter Callback</title>
+    <title>Twitter OAuth Callback</title>
 </head>
 <body>
     <h1>Twitter OAuth Callback</h1>
-    <p>If you see this message, the callback URL is working!</p>
+    <p>Processing your request...</p>
+    <script>
+        // Function to extract query parameters
+        function getQueryParams() {
+            const params = {};
+            window.location.search
+                .substring(1)
+                .split("&")
+                .forEach(function(part) {
+                    const pair = part.split("=");
+                    params[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+                });
+            return params;
+        }
+
+        // Get the authorization code from the URL
+        const params = getQueryParams();
+        if (params['code']) {
+            console.log('Authorization code:', params['code']);
+            // You can forward this code to your server or process it here
+            document.body.innerHTML += `<p>Authorization code received: ${params['code']}</p>`;
+        } else {
+            console.log('No authorization code found');
+            document.body.innerHTML += `<p>No authorization code found. Please try again.</p>`;
+        }
+    </script>
 </body>
 </html>
