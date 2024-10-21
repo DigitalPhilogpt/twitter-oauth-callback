@@ -9,7 +9,7 @@
     <h1>Twitter OAuth Callback</h1>
     <p>Processing your request...</p>
     <script>
-        // Function to extract query parameters
+        // Function to extract query parameters from the URL
         function getQueryParams() {
             const params = {};
             window.location.search
@@ -22,12 +22,22 @@
             return params;
         }
 
-        // Get the authorization code from the URL
+        // Get the authorization code from the URL parameters
         const params = getQueryParams();
         if (params['code']) {
             console.log('Authorization code:', params['code']);
-            // You can forward this code to your server or process it here
+            // Display the authorization code on the page
             document.body.innerHTML += `<p>Authorization code received: ${params['code']}</p>`;
+            
+            // TODO: You can add code here to send the authorization code to your Make webhook
+            // Example:
+            // fetch('https://your-make-webhook-url', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({ code: params['code'] })
+            // }).then(response => {
+            //     console.log('Code sent to Make:', response);
+            // });
         } else {
             console.log('No authorization code found');
             document.body.innerHTML += `<p>No authorization code found. Please try again.</p>`;
